@@ -1,0 +1,2 @@
+def var Hyperprolactinemia_discharge_diag_cur_unlmt_any_key type bool <='Hyperprolactinemia_discharge_diag_cur_unlmt_any';
+def var Hyperprolactinemia_discharge_diag_cur_unlmt_any_value type bool <= case when count(select sql(fmop.diag.patient_diagnose.diag_sycode_set) where sql(fmop.diag.patient_diagnose.is_valid)==true and sql(fmop.diag.patient_diagnose.diag_class_name) similar_to '主要|其他' and sql(fmop.diag.patient_diagnose.diag_name) similar_to '泌乳素|高' end)>0 then true else false end;

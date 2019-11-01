@@ -1,0 +1,101 @@
+def var PatientID type integer scope visit_record<= sql(fmop.visit.visit_record.patient_id);
+
+def var VisitID type integer scope visit_record<=sql(fmop.visit.visit_record.visit_id);
+
+def var global_now type number <= now()+8*3600*1000;
+
+def var Neutropenia_discharge_diag_cur_unlmt_any type bool <= case when count(select sql(fmop.diag.patient_diagnose.diag_sycode_set) where sql(fmop.diag.patient_diagnose.is_valid)==true and sql(fmop.diag.patient_diagnose.diag_class_name) similar_to '主要|其他'  and sql(fmop.diag.patient_diagnose.diag_sycode_set) similar_to '"78835"|"96095"' end)>0 then true else false end;
+
+def var low_neutrophil_lab_cur_unlmt_any type bool <=case when count(select sql(fmop.lab.lab_report_result.result_sycode_set) where sql(fmop.lab.lab_report_result.result_sycode_set) similar_to '"153692"' and sql(fmop.lab.lab_report_result.abnormal_flag_name) similar_to '低' end)>0 then true else false end;
+
+def var hypoalbuminemia_discharge_diag_cur_unlmt_any type bool <= case when count(select sql(fmop.diag.patient_diagnose.diag_sycode_set) where sql(fmop.diag.patient_diagnose.is_valid)==true and sql(fmop.diag.patient_diagnose.diag_class_name) similar_to '主要|其他' and sql(fmop.diag.patient_diagnose.diag_sycode_set) similar_to '"95807"' end)>0 then true else false end;
+
+def var Hypophosphatemia_discharge_diag_cur_unlmt_any type bool <= case when count(select sql(fmop.diag.patient_diagnose.diag_sycode_set) where sql(fmop.diag.patient_diagnose.is_valid)==true and sql(fmop.diag.patient_diagnose.diag_class_name) similar_to '主要|其他' and sql(fmop.diag.patient_diagnose.diag_sycode_set) similar_to '"98796"' end)>0 then true else false end;
+
+def var Hypoproteinemia_discharge_diag_cur_unlmt_any type bool <= case when count(select sql(fmop.diag.patient_diagnose.diag_sycode_set) where sql(fmop.diag.patient_diagnose.is_valid)==true and sql(fmop.diag.patient_diagnose.diag_class_name) similar_to '主要|其他' and sql(fmop.diag.patient_diagnose.diag_sycode_set) similar_to '"100257"' end)>0 then true else false end;
+
+def var Hypochloride_discharge_diag_cur_unlmt_any type bool <= case when count(select sql(fmop.diag.patient_diagnose.diag_sycode_set) where sql(fmop.diag.patient_diagnose.is_valid)==true and sql(fmop.diag.patient_diagnose.diag_class_name) similar_to '主要|其他' and sql(fmop.diag.patient_diagnose.diag_sycode_set) similar_to '"97783"' end)>0 then true else false end;
+
+def var Hypoglycemia_discharge_diag_cur_unlmt_any type bool <= case when count(select sql(fmop.diag.patient_diagnose.diag_sycode_set) where sql(fmop.diag.patient_diagnose.is_valid)==true and sql(fmop.diag.patient_diagnose.diag_class_name) similar_to '主要|其他' and sql(fmop.diag.patient_diagnose.diag_sycode_set) similar_to '"101042"' end)>0 then true else false end;
+
+def var Hyponatremia_discharge_diag_cur_unlmt_any type bool <= case when count(select sql(fmop.diag.patient_diagnose.diag_sycode_set) where sql(fmop.diag.patient_diagnose.is_valid)==true and sql(fmop.diag.patient_diagnose.diag_class_name) similar_to '主要|其他' and sql(fmop.diag.patient_diagnose.diag_sycode_set) similar_to '"96443"' end)>0 then true else false end;
+
+def var Hypokalemia_discharge_diag_cur_unlmt_any type bool <= case when count(select sql(fmop.diag.patient_diagnose.diag_sycode_set) where sql(fmop.diag.patient_diagnose.is_valid)==true and sql(fmop.diag.patient_diagnose.diag_class_name) similar_to '主要|其他' and sql(fmop.diag.patient_diagnose.diag_sycode_set) similar_to '"88756"' end)>0 then true else false end;
+
+def var Hypomagnesemia_discharge_diag_cur_unlmt_any type bool <= case when count(select sql(fmop.diag.patient_diagnose.diag_sycode_set) where sql(fmop.diag.patient_diagnose.is_valid)==true and sql(fmop.diag.patient_diagnose.diag_class_name) similar_to '主要|其他' and sql(fmop.diag.patient_diagnose.diag_sycode_set) similar_to '"98473"' end)>0 then true else false end;
+
+def var Homocysteine_elevation_lab_cur_unlmt_any type bool <= case when count(select sql(fmop.lab.lab_report_result.result_sycode_set) where sql(fmop.lab.lab_report_result.result_sycode_set) similar_to '"154228"' and sql(fmop.lab.lab_report_result.abnormal_flag_name) similar_to '高' end)>0 then true else false end;
+
+def var high_AST_lab_cur_unlmt_any type bool <=case when count(select sql(fmop.lab.lab_report_result.result_sycode_set) where sql(fmop.lab.lab_report_result.result_sycode_set) similar_to '"154156"' and sql(fmop.lab.lab_report_result.abnormal_flag_name) similar_to '高' end)>0 then true else false end;
+
+def var Pregnancy_diag_cur_unlmt_any type bool <= case when count(select sql(fmop.diag.patient_diagnose.diag_sycode_set) where sql(fmop.diag.patient_diagnose.is_valid)==true and sql(fmop.diag.patient_diagnose.diag_name) similar_to '妊娠|孕|流产|待产|胎盘|胎膜|单胎|多胎|双胎|胎儿|GDM|胎心|FGR' and not(sql(fmop.diag.patient_diagnose.diag_name) similar_to '非|不') end)>0 then true else false end;
+
+def var high_urinary_protein_lab_cur_unlmt_any type bool <=case when count(select sql(fmop.lab.lab_report_result.result_sycode_set) where sql(fmop.lab.lab_report_result.result_sycode_set) similar_to '"153811"' and sql(fmop.lab.lab_report_result.abnormal_flag_name) similar_to '高' end)>0 then true else false end;
+
+def var Positive_urinary_protein_lab_cur_unlmt_any type bool <= case when count(select sql(fmop.lab.lab_report_result.result_sycode_set) where sql(fmop.lab.lab_report_result.result_sycode_set) similar_to '"153811"' and sql(fmop.lab.lab_report_result.text_value) similar_to '阳|+' end)>0 then true else false end;
+
+def var Heart_failure_discharge_diag_cur_unlmt_any type bool <=  case when count(select sql(fmop.diag.patient_diagnose.diag_sycode_set) where sql(fmop.diag.patient_diagnose.is_valid)==true and sql(fmop.diag.patient_diagnose.diag_class_name) similar_to '主要|其他' and sql(fmop.diag.patient_diagnose.diag_sycode_set) similar_to '"101632"' end)>0 then true else false end;
+
+def var Acute_heart_failure_discharge_diag_cur_unlmt_any type bool <= case when count(select sql(fmop.diag.patient_diagnose.diag_sycode_set) where sql(fmop.diag.patient_diagnose.is_valid)==true and sql(fmop.diag.patient_diagnose.diag_class_name) similar_to '主要|其他' and sql(fmop.diag.patient_diagnose.diag_sycode_set) similar_to '"100043"' end)>0 then true else false end;
+
+def var high_TC_lab_cur_unlmt_any type bool <=case when count(select sql(fmop.lab.lab_report_result.result_sycode_set) where sql(fmop.lab.lab_report_result.result_sycode_set) similar_to '"152114"' and sql(fmop.lab.lab_report_result.abnormal_flag_name) similar_to '高' end)>0 then true else false end;
+
+def var high_total_protein_lab_cur_unlmt_any type bool <=case when count(select sql(fmop.lab.lab_report_result.result_sycode_set) where sql(fmop.lab.lab_report_result.result_sycode_set) similar_to '"154126"|"220589"' and sql(fmop.lab.lab_report_result.abnormal_flag_name) similar_to '高' end)>0 then true else false end;
+
+def var anemia_discharge_diag_cur_unlmt_any type bool <= case when count(select sql(fmop.diag.patient_diagnose.diag_sycode_set) where sql(fmop.diag.patient_diagnose.is_valid)==true and sql(fmop.diag.patient_diagnose.diag_class_name) similar_to '主要|其他' and sql(fmop.diag.patient_diagnose.diag_sycode_set) similar_to '"94039"' end)>0 then true else false end;
+
+def var high_transaminase_discharge_diag_cur_unlmt_any type bool <= case when count(select sql(fmop.diag.patient_diagnose.diag_sycode_set) where sql(fmop.diag.patient_diagnose.is_valid)==true and sql(fmop.diag.patient_diagnose.diag_class_name) similar_to '主要|其他' and sql(fmop.diag.patient_diagnose.diag_name) similar_to '转氨酶|高' end)>0 then true else false end;
+
+def var Unconjugated_hyperbilirubinemia_discharge_diag_cur_unlmt_any type bool <= case when count(select sql(fmop.diag.patient_diagnose.diag_sycode_set) where sql(fmop.diag.patient_diagnose.is_valid)==true and sql(fmop.diag.patient_diagnose.diag_class_name) similar_to '主要|其他' and sql(fmop.diag.patient_diagnose.diag_sycode_set) similar_to '"123640"' end)>0 then true else false end;
+
+def var Hyperhomocysteinemia_discharge_diag_cur_unlmt_any type bool <= case when count(select sql(fmop.diag.patient_diagnose.diag_sycode_set) where sql(fmop.diag.patient_diagnose.is_valid)==true and sql(fmop.diag.patient_diagnose.diag_class_name) similar_to '主要|其他' and sql(fmop.diag.patient_diagnose.diag_sycode_set) similar_to '"96605"' end)>0 then true else false end;
+
+def var low_HDL_lab_cur_unlmt_any type bool <=case when count(select sql(fmop.lab.lab_report_result.result_sycode_set) where sql(fmop.lab.lab_report_result.result_sycode_set) similar_to '"152118"' and sql(fmop.lab.lab_report_result.abnormal_flag_name) similar_to '低' end)>0 then true else false end;
+
+def var HDL_deficiency_discharge_diag_cur_unlmt_any type bool <= case when count(select sql(fmop.diag.patient_diagnose.diag_sycode_set) where sql(fmop.diag.patient_diagnose.is_valid)==true and sql(fmop.diag.patient_diagnose.diag_class_name) similar_to '主要|其他' and sql(fmop.diag.patient_diagnose.diag_name) similar_to '高密度脂蛋白' and sql(fmop.diag.patient_diagnose.diag_name) similar_to '低|缺' end)>0 then true else false end;
+
+def var Hyperammonia_discharge_diag_cur_unlmt_any type bool <= case when count(select sql(fmop.diag.patient_diagnose.diag_sycode_set) where sql(fmop.diag.patient_diagnose.is_valid)==true and sql(fmop.diag.patient_diagnose.diag_class_name) similar_to '主要|其他' and sql(fmop.diag.patient_diagnose.diag_sycode_set) similar_to '"92476"|"79066"' end)>0 then true else false end;
+
+def var Hyperprolactinemia_discharge_diag_cur_unlmt_any type bool <= case when count(select sql(fmop.diag.patient_diagnose.diag_sycode_set) where sql(fmop.diag.patient_diagnose.is_valid)==true and sql(fmop.diag.patient_diagnose.diag_class_name) similar_to '主要|其他' and sql(fmop.diag.patient_diagnose.diag_name) similar_to '泌乳素|高' end)>0 then true else false end;
+
+def var Hyperphosphatism_discharge_diag_cur_unlmt_any type bool <= case when count(select sql(fmop.diag.patient_diagnose.diag_sycode_set) where sql(fmop.diag.patient_diagnose.is_valid)==true and sql(fmop.diag.patient_diagnose.diag_class_name) similar_to '主要|其他' and sql(fmop.diag.patient_diagnose.diag_sycode_set) similar_to '"98055"' end)>0 then true else false end;
+
+def var hyperbilirubinemia_discharge_diag_cur_unlmt_any type bool <= case when count(select sql(fmop.diag.patient_diagnose.diag_sycode_set) where sql(fmop.diag.patient_diagnose.is_valid)==true and sql(fmop.diag.patient_diagnose.diag_class_name) similar_to '主要|其他' and sql(fmop.diag.patient_diagnose.diag_sycode_set) similar_to '"95922"' end)>0 then true else false end;
+
+def var Hyperlipidemia_discharge_diag_cur_unlmt_any type bool <= case when count(select sql(fmop.diag.patient_diagnose.diag_sycode_set) where sql(fmop.diag.patient_diagnose.is_valid)==true and sql(fmop.diag.patient_diagnose.diag_class_name) similar_to '主要|其他' and sql(fmop.diag.patient_diagnose.diag_sycode_set) similar_to '"99610"' end)>0 then true else false end;
+
+def var Hyperalbuminemia_discharge_diag_cur_unlmt_any type bool <= case when count(select sql(fmop.diag.patient_diagnose.diag_sycode_set) where sql(fmop.diag.patient_diagnose.is_valid)==true and sql(fmop.diag.patient_diagnose.diag_class_name) similar_to '主要|其他' and sql(fmop.diag.patient_diagnose.diag_sycode_set) similar_to '"95569"' end)>0 then true else false end;
+
+def var Hyperchloride_discharge_diag_cur_unlmt_any type bool <= case when count(select sql(fmop.diag.patient_diagnose.diag_sycode_set) where sql(fmop.diag.patient_diagnose.is_valid)==true and sql(fmop.diag.patient_diagnose.diag_class_name) similar_to '主要|其他' and sql(fmop.diag.patient_diagnose.diag_sycode_set) similar_to '"94981"' end)>0 then true else false end;
+
+def var Hypercalcemia_discharge_diag_cur_unlmt_any type bool <= case when count(select sql(fmop.diag.patient_diagnose.diag_sycode_set) where sql(fmop.diag.patient_diagnose.is_valid)==true and sql(fmop.diag.patient_diagnose.diag_class_name) similar_to '主要|其他' and sql(fmop.diag.patient_diagnose.diag_sycode_set) similar_to '"87562"|"99925"' end)>0 then true else false end;
+
+def var Hypernatremia_discharge_diag_cur_unlmt_any type bool <= case when count(select sql(fmop.diag.patient_diagnose.diag_sycode_set) where sql(fmop.diag.patient_diagnose.is_valid)==true and sql(fmop.diag.patient_diagnose.diag_class_name) similar_to '主要|其他' and sql(fmop.diag.patient_diagnose.diag_name) similar_to '钠|高' end)>0 then true else false end;
+
+def var Hyperkalemia_discharge_diag_cur_unlmt_any type bool <= case when count(select sql(fmop.diag.patient_diagnose.diag_sycode_set) where sql(fmop.diag.patient_diagnose.is_valid)==true and sql(fmop.diag.patient_diagnose.diag_class_name) similar_to '主要|其他' and sql(fmop.diag.patient_diagnose.diag_sycode_set) similar_to '"88309"' end)>0 then true else false end;
+
+def var Hypermagnesemia_discharge_diag_cur_unlmt_any type bool <= case when count(select sql(fmop.diag.patient_diagnose.diag_sycode_set) where sql(fmop.diag.patient_diagnose.is_valid)==true and sql(fmop.diag.patient_diagnose.diag_class_name) similar_to '主要|其他' and sql(fmop.diag.patient_diagnose.diag_sycode_set) similar_to '"94743"' end)>0 then true else false end;
+
+def var low_pH_lab_cur_unlmt_any type bool <=case when count(select sql(fmop.lab.lab_report_result.result_sycode_set) where sql(fmop.lab.lab_report_result.result_sycode_set) similar_to '"152127"' and sql(fmop.lab.lab_report_result.abnormal_flag_name) similar_to '低' end)>0 then true else false end;
+
+def var high_pH_lab_cur_unlmt_any type bool <=case when count(select sql(fmop.lab.lab_report_result.result_sycode_set) where sql(fmop.lab.lab_report_result.result_sycode_set) similar_to '"152127"' and sql(fmop.lab.lab_report_result.abnormal_flag_name) similar_to '高' end)>0 then true else false end;
+
+def var twoH_blood_sugar_lab_cur_unlmt_max type number <=max(select sql(fmop.lab.lab_report_result.numerical_value) where sql(fmop.lab.lab_report_result.result_sycode_set) similar_to '"152035"|"220577"' end);
+
+def var low_PCO2_lab_cur_unlmt_any type bool <=case when count(select sql(fmop.lab.lab_report_result.result_sycode_set) where sql(fmop.lab.lab_report_result.result_sycode_set) similar_to '"152128"' and sql(fmop.lab.lab_report_result.abnormal_flag_name) similar_to '低' end)>0 then true else false end;
+
+def var high_PCO2_lab_cur_unlmt_any type bool <=case when count(select sql(fmop.lab.lab_report_result.result_sycode_set) where sql(fmop.lab.lab_report_result.result_sycode_set) similar_to '"152128"' and sql(fmop.lab.lab_report_result.abnormal_flag_name) similar_to '高' end)>0 then true else false end;
+
+def var subclinical_hypothyroidism_discharge_diag_cur_unlmt_any type bool <= case when count(select sql(fmop.diag.patient_diagnose.diag_sycode_set) where sql(fmop.diag.patient_diagnose.is_valid)==true and sql(fmop.diag.patient_diagnose.diag_class_name) similar_to '主要|其他' and sql(fmop.diag.patient_diagnose.diag_sycode_set) similar_to '"127517"' end)>0 then true else false end;
+
+def var Thyrotropin_decrease_lab_cur_unlmt_any type bool <=case when count(select sql(fmop.lab.lab_report_result.result_sycode_set) where sql(fmop.lab.lab_report_result.result_sycode_set) similar_to '"152136"|"154296"' and sql(fmop.lab.lab_report_result.abnormal_flag_name) similar_to '低' end)>0 then true else false end;
+
+def var Thyrotropin_elevation_lab_cur_unlmt_any type bool <=case when count(select sql(fmop.lab.lab_report_result.result_sycode_set) where sql(fmop.lab.lab_report_result.result_sycode_set) similar_to '"152136"|"154296"' and sql(fmop.lab.lab_report_result.abnormal_flag_name) similar_to '高' end)>0 then true else false end;
+
+def var Respiratory_alkalosis_discharge_diag_cur_unlmt_any type bool <= case when count(select sql(fmop.diag.patient_diagnose.diag_sycode_set) where sql(fmop.diag.patient_diagnose.is_valid)==true and sql(fmop.diag.patient_diagnose.diag_class_name) similar_to '主要|其他' and sql(fmop.diag.patient_diagnose.diag_sycode_set) similar_to '"101902"' end)>0 then true else false end;
+
+def var Respiratory_acidosis_discharge_diag_cur_unlmt_any type bool <= case when count(select sql(fmop.diag.patient_diagnose.diag_sycode_set) where sql(fmop.diag.patient_diagnose.is_valid)==true and sql(fmop.diag.patient_diagnose.diag_class_name) similar_to '主要|其他' and sql(fmop.diag.patient_diagnose.diag_sycode_set) similar_to '"96068"' end)>0 then true else false end;
+
+def var Metabolic_alkalosis_discharge_diag_cur_unlmt_any type bool <= case when count(select sql(fmop.diag.patient_diagnose.diag_sycode_set) where sql(fmop.diag.patient_diagnose.is_valid)==true and sql(fmop.diag.patient_diagnose.diag_class_name) similar_to '主要|其他' and sql(fmop.diag.patient_diagnose.diag_sycode_set) similar_to '"97848"' end)>0 then true else false end;
+
+def var Metabolic_acidosis_discharge_diag_cur_unlmt_any type bool <= case when count(select sql(fmop.diag.patient_diagnose.diag_sycode_set) where sql(fmop.diag.patient_diagnose.is_valid)==true and sql(fmop.diag.patient_diagnose.diag_class_name) similar_to '主要|其他' and sql(fmop.diag.patient_diagnose.diag_sycode_set) similar_to '"98370"' end)>0 then true else false end;

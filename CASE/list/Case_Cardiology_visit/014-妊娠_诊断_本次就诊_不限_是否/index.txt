@@ -1,0 +1,2 @@
+def var Pregnancy_diag_cur_unlmt_any_key type bool <='Pregnancy_diag_cur_unlmt_any';
+def var Pregnancy_diag_cur_unlmt_any_value type bool <= case when count(select sql(fmop.diag.patient_diagnose.diag_sycode_set) where sql(fmop.diag.patient_diagnose.is_valid)==true and sql(fmop.diag.patient_diagnose.diag_name) similar_to '妊娠|孕|流产|待产|胎盘|胎膜|单胎|多胎|双胎|胎儿|GDM|胎心|FGR' and not(sql(fmop.diag.patient_diagnose.diag_name) similar_to '非|不') end)>0 then true else false end;

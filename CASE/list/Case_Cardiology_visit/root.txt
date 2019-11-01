@@ -1,0 +1,5 @@
+﻿def var PatientID type integer scope visit_record<= sql(fmop.visit.visit_record.patient_id);
+
+def var VisitID type integer scope visit_record<=sql(fmop.visit.visit_record.visit_id);
+
+def var global_now type number <= now()+8*3600*1000;

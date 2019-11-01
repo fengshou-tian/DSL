@@ -1,0 +1,2 @@
+def var high_TC_lab_cur_unlmt_any_key type bool <='high_TC_lab_cur_unlmt_any';
+def var high_TC_lab_cur_unlmt_any_value type bool <=case when count(select sql(fmop.lab.lab_report_result.result_sycode_set) where sql(fmop.lab.lab_report_result.result_sycode_set) similar_to '"152114"' and sql(fmop.lab.lab_report_result.abnormal_flag_name) similar_to '高' end)>0 then true else false end;

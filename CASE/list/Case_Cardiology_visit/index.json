@@ -1,0 +1,23 @@
+{
+  "GroupName": "variable_value_set",
+  "GlobalScopeName": "visit_record",
+  "OutputVar": "VisitID",
+  "SourceDatabase": "postgres://zhanglonglong:gXFqHc7J@172.16.0.20/hdr_cdss_medtest",
+  "TargetDatabase": "postgres://zhanglonglong:gXFqHc7J@172.16.0.20/cdss_medtest",
+  "TargetSchema": "cdss",
+  "TargetTable": "patient_var_record",
+  "TaskName": "CASE_Cardiology_visit_Med",
+  "IncludeProperties": [
+    "Patient_Id",
+    "Visit_ID",
+    "VKey",
+    "VValue",
+    "PatientId",
+    "PatientID",
+    "VisitID"
+  ],
+  "OutputDirectory": "D:\\workspace\\git\\synyi.cdss.dsl\\VTE\\dsl",
+  "ConnectionString": "host=172.16.0.20;database=cdss_medtest;username=zhanglonglong;password=gXFqHc7J;PersistSecurityInfo=true;Maximum Pool Size=100;Connection Idle Lifetime=5",
+  "Schema": "cdss",
+  "RequestUrl": "http://172.16.127.101:25557"
+}

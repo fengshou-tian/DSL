@@ -1,0 +1,2 @@
+def var twoH_blood_sugar_lab_cur_unlmt_max_key type bool <='twoH_blood_sugar_lab_cur_unlmt_max';
+def var twoH_blood_sugar_lab_cur_unlmt_max_value type number <=max(select sql(fmop.lab.lab_report_result.numerical_value) where sql(fmop.lab.lab_report_result.result_sycode_set) similar_to '"152035"|"220577"' end);

@@ -1,0 +1,12 @@
+
+def var eGFR_value_lab_cur_unlmt_min_key type numerical <='eGFR_value_lab_cur_unlmt_min';
+
+def var temp_visit_record_age_day type number <= toNumber(sql(fmop.visit.visit_record.age_day))/365;
+
+def var temp_lab_lab_report_sex_name type text <= case when first(sql(fmop.lab.lab_report.sex_name)) similar_to '女' then 2 else 1 end;
+
+def var temp_lab_report_result_sycode_set type number <= min(select toNumber(sql(fmop.lab.lab_report_result.numerical_value))/88.41 where sql(fmop.lab.lab_report_result.result_sycode_set) similar_to '"154184"' and sql(fmop.lab.lab_report.unit_name) similar_to 'umol/l|umol/L' end);
+
+def var eGFR_value_lab_cur_unlmt_min_value type number <=case var temp_lab_lab_report_sex_name 
+when 2 then toNumber(186*(var temp_lab_report_result_sycode_set) - 1.154 * (var temp_visit_record_age_day)) - 0.150626
+ else 186 * (var temp_lab_report_result_sycode_set) - 1.154 * (var temp_visit_record_age_day) end;

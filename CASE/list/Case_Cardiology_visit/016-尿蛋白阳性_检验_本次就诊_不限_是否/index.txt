@@ -1,0 +1,2 @@
+def var Positive_urinary_protein_lab_cur_unlmt_any_key type bool <='Positive_urinary_protein_lab_cur_unlmt_any';
+def var Positive_urinary_protein_lab_cur_unlmt_any_value type bool <= case when count(select sql(fmop.lab.lab_report_result.result_sycode_set) where sql(fmop.lab.lab_report_result.result_sycode_set) similar_to '"153811"' and sql(fmop.lab.lab_report_result.text_value) similar_to '阳|+' end)>0 then true else false end;
